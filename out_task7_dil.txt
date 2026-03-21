@@ -1,0 +1,10 @@
+Tasks: [['D2'], ['D3']]
+Starting DIL Task D2
+model trained on Task D2 is loaded
+seen domain: ['D2'] and its accuracy: 54.3
+Average Accuracy:  54.3
+Starting DIL Task D3
+model trained on Task D3 is loaded
+seen domain: ['D2'] and its accuracy: 53.99
+seen domain: ['D3'] and its accuracy: 33.95
+Average Accuracy:  43.97
