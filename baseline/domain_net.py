@@ -1,6 +1,7 @@
-# This is PANN's CNN14 model architecture written by Qiuqiang Kong
-# Taken and modified from https://github.com/qiuqiangkong/audioset_tagging_cnn/blob/master/pytorch/models.py
-
+'''
+Taken and modified  PANN's CNN14 model architecture written by Qiuqiang Kong
+from https://github.com/qiuqiangkong/audioset_tagging_cnn/blob/master/pytorch/models.py
+'''
 from torchlibrosa.stft import Spectrogram, LogmelFilterBank
 from torchlibrosa.augmentation import SpecAugmentation
 import torch

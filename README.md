@@ -62,17 +62,17 @@ python baseline/baseline_DIL_task7.py train --augmentation='none' --learning_rat
 #### Neural network
 - Architecture
   - CNN block #1:  
-    - 2 x [2D Convolutional layer (filters: 64, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 64, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - CNN block #2:  
-    - 2 x [2D Convolutional layer (filters: 128, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 128, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - CNN block #3:  
-    - 2 x [2D Convolutional layer (filters: 256, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 256, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - CNN block #4:  
-    - 2 x [2D Convolutional layer (filters: 512, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 512, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - CNN block #5:  
-    - 2 x [2D Convolutional layer (filters: 1024, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 1024, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - CNN block #6:  
-    - 2 x [2D Convolutional layer (filters: 2048, kernel size: 3) + Batch normalization + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
+    - 2 x [2D Convolutional layer (filters: 2048, kernel size: 3) + 3 Batch normalization layers (D1, D2 and D3) + ReLu], 2 x 2 average pooling + Dropout (rate: 20%)
   - Global pooling
   - Output layer (activation: softmax)
 - Learning: 120 epochs (batch size 32), data shuffling between epochs
