@@ -1,6 +1,15 @@
 This repository contains the baseline code for DCASE 2026 Task 7, Domain-Agnostic Incremental Learning for Audio Classification.
 Participants can build their own systems by extending the provided baseline system. 
 
+## System description
+<p align="justify"> The baseline system includes 6 convolutional blocks. Each block includes 2 convolutional layers, each convolutional layer followed by a batch normalization (BN) layer, with the layer specifications the same as [PANNs](https://github.com/qiuqiangkong/audioset_tagging_cnn) CNN14.  Global pooling is applied to the last convolutional layer, to get a fixed-length input feature vector to the classifier. The baseline model is trained from scratch on the domain D1, then separate domain-specific BN layers are adapted for domain D2 and D3 in incremental phases. 
+</p>
+
+![](./task7.jpg)
+
+<p align="justify">During inference, domain-specific BN layers are predicted and used with domain-shared layers for classification. Specifically, an input audio is forward passed through a combination of shared and domain-specific layers of each domain seen so far and obtains the class probabilities. Subsequently, uncertainty of the model on given input audio among the predicted probabilities is computed using entropy. The domain-specific layers which have minimum entropy, denoting lower uncertainty, are selected for classification.
+</p>
+
 ## Requirements
 
 To install requirements:
@@ -31,10 +40,18 @@ audio/07673.wav	speech	D3	9
 * Labels for corresponding sounds are listed in [config_task7](utils/config_task7.py).
 * We segmented the audios in development train into 4-second signals for training the baseline system in batches. The testing samples have variable lengths. During inference, we predict the class label per audio file. However, participants can choose any method to deal with audios in variable lengths.
 * Log mel-band energies are obtained from sounds using [torchlibrosa](https://github.com/qiuqiangkong/torchlibrosa) library.
-## System description
-The baseline system includes 6 convolutional blocks. Each block includes 2 convolutional layers, each convolutional layer followed by a batch normalization (BN) layer, with the layer specifications the same as [PANNs](https://github.com/qiuqiangkong/audioset_tagging_cnn) CNN14.  Global pooling is applied to the last convolutional layer, to get a fixed-length input feature vector to the classifier. The baseline model is trained from scratch on the domain D1, then separate domain-specific BN layers are adapted for domain D2 and D3 in incremental phases. 
-![](./task7.jpg)
-During inference, domain-specific BN layers are predicted and used with domain-shared layers for classification. Specifically, an input audio is forward passed through a combination of shared and domain-specific layers of each domain seen so far and obtains the class probabilities. Subsequently, uncertainty of the model on given input audio among the predicted probabilities is computed using entropy. The domain-specific layers which have minimum entropy, denoting lower uncertainty, are selected for classification.
+
+## Checkpoints
+The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from here.  Store all the checkpoints in a folder 'checkpoints' to check the results of the baseline system on development test set.
+#### Train
+To train the baseline (domain-specific BN layers) from scratch on D2 and D3:
+```
+python baseline/baseline_DIL_task7.py train --augmentation='none' --learning_rate=1e-4 --batch_size=32 --cuda --num_workers 16 --epoch 120 --save
+```
+To test the baseline performance on D2 and D3 using pre-trained model checkpoints:
+```
+python baseline/baseline_DIL_task7.py train --augmentation='none' --learning_rate=1e-4 --batch_size=32 --cuda --num_workers 16 --epoch 120 --resume
+```
 ## Parameters
 #### Acoustic features
 - Sampling rate:  32 kHz
@@ -91,6 +108,8 @@ Results of baseline are calculated using PyTorch in GPU mode . The baseline is t
   </tbody>
 </table>
 Note: The reported baseline system performance is not exactly reproducible due to varying setups. However, you should be able to obtain very similar results.
+
+
 ## Citation
 If you are using the baseline system, please cite the following: 
 
