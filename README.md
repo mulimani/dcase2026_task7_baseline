@@ -42,8 +42,10 @@ audio/07673.wav	speech	D3	9
 * Log mel-band energies are obtained from sounds using [torchlibrosa](https://github.com/qiuqiangkong/torchlibrosa) library.
 
 ## Checkpoints
-The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from here.  Store all the checkpoints in a folder 'checkpoints' to check the results of the baseline system on development test set.
-#### Train
+<p align="justify">The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from here.  Store all the checkpoints in a folder 'checkpoints' to check the results of the baseline system on development test set.
+</p>
+
+#### Training and evaluation
 To train the baseline (domain-specific BN layers) from scratch on D2 and D3:
 ```
 python baseline/baseline_DIL_task7.py train --augmentation='none' --learning_rate=1e-4 --batch_size=32 --cuda --num_workers 16 --epoch 120 --save
