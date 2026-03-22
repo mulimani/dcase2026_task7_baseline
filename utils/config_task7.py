@@ -23,3 +23,15 @@ df_DIL_dev_train = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_d
 df_DIL_dev_test = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_test.txt", sep='\t', names=['filename', 'target', 'domain', 'new_target'])
 #df_DIL_eval = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_test.txt", sep='\t', names=['filename', 'target', 'new_target'])
 audio_folder_DIL = "/scratch/project_462001198/manjunath/DIL/task7_data/"
+
+dict_class_labels = { 'alarm': 0,
+               'baby': 1,
+               'dog': 2,
+               'engine': 3,
+               'fire': 4,
+               'footsteps': 5,
+               'knock': 6,
+               'phone': 7,
+               'piano': 8,
+               'speech': 9
+               }
