@@ -17,6 +17,7 @@ ref = 1.0
 amin = 1e-10
 top_db = None
 classes_num_DIL = 10
+save_resume_path = '/scratch/project_462001198/manjunath/baseline_task7/checkpoints/'
 
 
 df_DIL_dev_train = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_train.txt", sep='\t', names=['filename', 'target', 'domain', 'new_target'])

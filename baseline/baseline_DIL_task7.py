@@ -180,18 +180,23 @@ class Learner():
             scheduler.step()
 
         if args.save:
-            save_path = '/scratch/project_462001198/manjunath/baseline_task7/checkpoints/'
+            save_path = config.save_resume_path
             if not os.path.exists(save_path):
                 os.makedirs(save_path)
             torch.save(self.model.state_dict(),
                        os.path.join(save_path, 'checkpoint_' + 'D' + str(self.cur_task + 1) + '.pth'))
 
+    def load_checkpoint(self):
+        resume_path = os.path.join(config.save_resume_path, 'checkpoint_' + 'D' + str(self.cur_task + 1) + '.pth')
+        self.model.load_state_dict(torch.load(resume_path))
+        print('model trained on Task D{} is loaded'.format(self.cur_task + 1))
 
     def incremental_setup(self, train_df, valid_df, seen_domains, batch_size, num_workers, device, args):
 
         self.cur_task += 1
 
         if self.cur_task == 0:
+            self.load_checkpoint()
             self.cur_task += 1 #Skip the domain D1
 
         print("Starting DIL Task D{}".format(self.cur_task + 1))
@@ -207,15 +212,10 @@ class Learner():
         validate_loader = torch.utils.data.DataLoader(dataset=dataset_val, batch_size=1, shuffle=False,
                                                       num_workers=num_workers, pin_memory=True)
 
-        #test_loader = torch.utils.data.DataLoader(dataset=dataset_test, batch_size=batch_size, shuffle=False,
-        #                                              num_workers=num_workers, pin_memory=True)
 
         if args.resume:
             # if i == 0:
-            resume_path = os.path.join('/scratch/project_462001198/manjunath/baseline_task7/checkpoints/', 'checkpoint_' + 'D' + str(self.cur_task + 1) + '.pth')
-
-            self.model.load_state_dict(torch.load(resume_path))
-            print('model trained on Task D{} is loaded'.format(self.cur_task + 1))
+            self.load_checkpoint()
         else:
             self.incremental_train(train_loader, validate_loader, device, args)
 
