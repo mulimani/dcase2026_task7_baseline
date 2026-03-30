@@ -111,7 +111,6 @@ class MCnn14(nn.Module):
 
         self.fc = nn.Linear(2048, classes_num)
 
-        #self.domain_clsfr = nn.ModuleList([nn.Linear(2048, classes_num, bias=False) for i in range(nb_tasks)])
 
 
 
@@ -201,7 +200,7 @@ class MCnn14(nn.Module):
         (x1, _) = torch.max(x, dim=2)
         x2 = torch.mean(x, dim=2)
         x = x1 + x2
-        x = self.fc(x) #+ self.domain_clsfr[task](x)
+        x = self.fc(x)
         return x
 
 

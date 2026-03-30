@@ -95,9 +95,7 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
         with open(os.path.join(output_path  + 'output.txt'), 'a') as f:
             class_label = list(config.dict_class_labels.keys())[list(config.dict_class_labels.values()).index(int(targets.cpu().numpy()))]
-            print(audio_file + '\t' + str(class_label) + '\t' + 'D' + str(task_id + 1) + '\t' + str(
-                int(targets.cpu().numpy())) + '\n')
-            f.write(audio_file + '\t' + str(class_label) + '\t' + 'D'+str(task_id + 1) + '\t' + str(int(targets.cpu().numpy())) + '\n')
+            f.write(audio_file[0] + '\t' + str(class_label) + '\t' + 'D'+str(task_id.cpu().numpy() + 1) + '\t' + str(int(targets.cpu().numpy())) + '\n')
         # print(total, correct)
     # print(total, correct)
     for key in output_dict.keys():
@@ -194,9 +192,9 @@ class Learner():
             torch.save(self.model.state_dict(),
                        os.path.join(save_path, 'checkpoint_' + 'D' + str(self.cur_task + 1) + '.pth'))
 
-    def load_checkpoint(self):
+    def load_checkpoint(self, device):
         resume_path = os.path.join(config.save_resume_path, 'checkpoint_' + 'D' + str(self.cur_task + 1) + '.pth')
-        self.model.load_state_dict(torch.load(resume_path))
+        self.model.load_state_dict(torch.load(resume_path, map_location=torch.device(device)))
         print('model trained on Task D{} is loaded'.format(self.cur_task + 1))
 
     def incremental_setup(self, train_df, valid_df, seen_domains, batch_size, num_workers, device, args):
@@ -204,7 +202,7 @@ class Learner():
         self.cur_task += 1
 
         if self.cur_task == 0:
-            self.load_checkpoint()
+            self.load_checkpoint(device)
             self.cur_task += 1 #Skip the domain D1
 
         print("Starting DIL Task D{}".format(self.cur_task + 1))
@@ -223,7 +221,7 @@ class Learner():
 
         if args.resume:
             # if i == 0:
-            self.load_checkpoint()
+            self.load_checkpoint(device)
         else:
             self.incremental_train(train_loader, validate_loader, device, args)
 
