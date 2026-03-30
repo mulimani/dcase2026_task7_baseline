@@ -18,12 +18,14 @@ amin = 1e-10
 top_db = None
 classes_num_DIL = 10
 save_resume_path = '/scratch/project_462001198/manjunath/baseline_task7/checkpoints/'
+audio_folder_DIL = '/scratch/project_462001198/manjunath/DIL/task7_data/'
+output_folder = '/scratch/project_462001198/manjunath/DIL/task7_data/results/'
 
 
-df_DIL_dev_train = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_train.txt", sep='\t', names=['filename', 'target', 'domain', 'new_target'])
-df_DIL_dev_test = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_test.txt", sep='\t', names=['filename', 'target', 'domain', 'new_target'])
+df_DIL_dev_train = pd.read_csv(os.path.join(audio_folder_DIL + 'evaluation_setup/' +'development_train.txt'), sep='\t', names=['filename', 'target', 'domain', 'new_target'])
+df_DIL_dev_test = pd.read_csv(os.path.join(audio_folder_DIL + 'evaluation_setup/' + '/development_test.txt'), sep='\t', names=['filename', 'target', 'domain', 'new_target'])
 #df_DIL_eval = pd.read_csv("/scratch/project_462001198/manjunath/DIL/task7_data/evaluation_setup/development_test.txt", sep='\t', names=['filename', 'target', 'new_target'])
-audio_folder_DIL = "/scratch/project_462001198/manjunath/DIL/task7_data/"
+
 
 dict_class_labels = { 'alarm': 0,
                'baby': 1,

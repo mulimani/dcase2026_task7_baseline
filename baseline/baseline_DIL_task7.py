@@ -32,7 +32,7 @@ def _compute_accuracy(model, loader, task, device):
     correct, total = 0, 0
     output_dict = {}
 
-    for i, (inputs, targets) in enumerate(loader):
+    for i, (inputs, targets, audio_file) in enumerate(loader):
         inputs = inputs.float()
         inputs = inputs.to(device)
         with torch.no_grad():
@@ -61,7 +61,10 @@ def _compute_uncertainity(model, loader, seen_domains, device):
     nb_tasks = len(seen_domains) + 1 # +1 is D1
     correct, total = 0, 0
     output_dict = {}
-    for i, (inputs, targets) in enumerate(loader):
+    output_path = config.output_folder
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    for i, (inputs, targets, audio_file) in enumerate(loader):
         outputs_uncs = None
         inputs = inputs.float()
         inputs = inputs.to(device)
@@ -90,6 +93,11 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         append_to_dict(output_dict, 'clipwise_output',
                        outputs.data.cpu().numpy())
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
+        with open(os.path.join(output_path  + 'output.txt'), 'a') as f:
+            class_label = list(config.dict_class_labels.keys())[list(config.dict_class_labels.values()).index(int(targets.cpu().numpy()))]
+            print(audio_file + '\t' + str(class_label) + '\t' + 'D' + str(task_id + 1) + '\t' + str(
+                int(targets.cpu().numpy())) + '\n')
+            f.write(audio_file + '\t' + str(class_label) + '\t' + 'D'+str(task_id + 1) + '\t' + str(int(targets.cpu().numpy())) + '\n')
         # print(total, correct)
     # print(total, correct)
     for key in output_dict.keys():
@@ -158,7 +166,7 @@ class Learner():
             sum_loss = 0
             sum_dist_loss = 0
             sum_class_loss = 0
-            for batch_idx, (audio, target) in enumerate(train_loader):
+            for batch_idx, (audio, target, _) in enumerate(train_loader):
                 optimizer.zero_grad()
                 audio = audio.float()
                 target = target.float()

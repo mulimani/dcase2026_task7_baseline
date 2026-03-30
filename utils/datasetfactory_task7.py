@@ -38,6 +38,7 @@ class DILDatasetInc(Dataset):
         self.audio_folder = audio_folder
         self.data_files = []
         self.labels = []
+        self.audio_files = []
         self.class_to_idx = {}
         self._load_dataset()
 
@@ -58,13 +59,16 @@ class DILDatasetInc(Dataset):
 
             self.data_files.append(waveform)
             self.labels.append(target)
+            self.audio_files.append(file_name)
 
     def __len__(self):
         return len(self.data_files)
 
+
     def __getitem__(self, idx):
         data = self.data_files[idx]
         label = self.labels[idx]  # Get the corresponding label
-        return data, label
+        audio_file = self.audio_files[idx]
+        return data, label, audio_file
 
 
