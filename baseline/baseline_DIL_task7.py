@@ -22,7 +22,9 @@ from datasetfactory_task7 import DILDatasetInc as DILDataset
 from sklearn import metrics
 from tqdm import tqdm
 from utilities import *
+import time
 
+timestr = time.strftime("%Y%m%d-%H%M%S")
 
 
 def _compute_accuracy(model, loader, task, device):
@@ -52,7 +54,7 @@ def _compute_accuracy(model, loader, task, device):
         output_dict[key] = np.concatenate(output_dict[key], axis=0)
     cm = metrics.confusion_matrix(np.argmax(output_dict['target'], axis=-1), np.argmax(output_dict['clipwise_output'], axis=-1), labels=None)
     class_acc = cm.diagonal() / cm.sum(axis=1)
-    print(class_acc)
+    #print(class_acc)
     return np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
 
@@ -93,7 +95,7 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         append_to_dict(output_dict, 'clipwise_output',
                        outputs.data.cpu().numpy())
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
-        with open(os.path.join(output_path  + 'output.txt'), 'a') as f:
+        with open(os.path.join(output_path  + 'output_' + timestr + '.txt'), 'a') as f:
             class_label = list(config.dict_class_labels.keys())[list(config.dict_class_labels.values()).index(int(targets.cpu().numpy()))]
             f.write(audio_file[0] + '\t' + str(class_label) + '\t' + 'D'+str(task_id.cpu().numpy() + 1) + '\t' + str(int(targets.cpu().numpy())) + '\n')
         # print(total, correct)
@@ -170,9 +172,10 @@ class Learner():
                 target = target.float()
                 audio = audio.to(device)
                 target = target.to(device)
+                target_indices = torch.argmax(target, dim=-1)
 
                 logits = self.model(audio, self.cur_task) #cur_task is from 0, D1:0, D2:1, D3:2
-                loss = criteria(logits, target)
+                loss = criteria(logits, target_indices)
 
                 sum_loss += loss.item()
                 loss.backward()
