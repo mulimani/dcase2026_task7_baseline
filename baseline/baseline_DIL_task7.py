@@ -87,6 +87,7 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         # Classification
         with torch.no_grad():
             outputs = model(inputs, task_id)
+        outputs = torch.softmax(outputs, dim=1)
         predicts = torch.max(outputs, dim=1)[1]
         target_labels = targets
         targets = torch.argmax(targets, dim=-1)
