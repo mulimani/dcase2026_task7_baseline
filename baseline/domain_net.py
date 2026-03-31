@@ -11,30 +11,6 @@ import math
 import copy
 
 
-def load_model(
-    task: int = 0,
-) -> torch.nn.Module:
-    """
-    Load a state dict from a checkpoint into a model.
-
-    Args:
-        model: The PyTorch model instance.
-        task: Incremental step to load the correct state_dictionary.
-
-    Returns:
-        The model with loaded weights.
-    """
-    model = MCnn14(
-    paths = [] # List of checkpoints corresponding to D0, D1, D2
-    checkpoint_path = Path(paths[task])
-
-    checkpoint = torch.load(checkpoint_path)
-
-    model.load_state_dict(checkpoint)
-    model.eval()
-
-    return model
-
 def init_layer(layer):
     """Initialize a Linear or Convolutional layer. """
     nn.init.xavier_uniform_(layer.weight)
