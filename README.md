@@ -93,14 +93,14 @@ Results of baseline are calculated using PyTorch in GPU mode . The baseline is t
   </thead>
   <tbody>
     <tr>
-      <td>D2</td>
+      <td>D3</td>
       <td></td>
-      <td>54.7</td>
+      <td>35.0</td>
     </tr>
     <tr>
-      <td>D3</td>
+      <td>D2</td>
       <td>54.7</td>
-      <td>35.0</td>
+      <td>54.7</td>
     </tr>
     <tr>
       <td>Average accuracy</td>
