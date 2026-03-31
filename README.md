@@ -19,8 +19,8 @@ pip install -r requirements.txt
 ```
 ## Data and Features 
 
-* Download the development dataset from the
-* The dataset structure should be:
+* Download the development dataset from the [Zenodo](https://zenodo.org/records/19335184).
+* Prepare the dataset in a format that enables the baseline system to correctly read and process the input audio files. The dataset structure should be:
 ```text
 task7_data/
 ├── audio
@@ -38,12 +38,12 @@ audio/07672.wav	speech	D3	9
 audio/07673.wav	speech	D3	9
 ```
 * Labels for corresponding sounds are listed in [config_task7](utils/config_task7.py).
-* We segmented the audios in development train into 4-second signals for training the baseline system in batches. The testing samples have variable lengths. During inference, we predict the class label per audio file. However, participants can choose any method to deal with audios in variable lengths.
+* We segmented the audios in development train into 4-second signals for training the baseline system in batches using [chunking](utils/chunking.py). The testing samples have variable lengths. During inference, we predict the class label per audio file. 
 * Log mel-band energies are obtained from sounds using [torchlibrosa](https://github.com/qiuqiangkong/torchlibrosa) library.
 
 ## Checkpoints
-<p align="justify">The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from here.  Store all the checkpoints in a folder 'checkpoints' to check the results of the baseline system on development test set.
-</p>
+The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from [here](https://drive.google.com/drive/folders/1C21s1KlN4ZbnboIdtO8H0T-S0_k8yw3o?usp=sharing).  Store all the checkpoints in a folder 'checkpoints/BN/' or updated the 'save_resume_path' in [config_task7](utils/config_task7.py) to check the results of the baseline system on development test set.
+
 
 #### Training and evaluation
 To train the baseline (domain-specific BN layers) from scratch on D2 and D3:
