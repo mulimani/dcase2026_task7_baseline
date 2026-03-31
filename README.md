@@ -87,8 +87,8 @@ Results of baseline are calculated using PyTorch in GPU mode . The baseline is t
   <thead>
     <tr>
       <th></th>
-      <th>D3</th>
       <th>D2</th>
+      <th>D3</th>
     </tr>
   </thead>
   <tbody>
