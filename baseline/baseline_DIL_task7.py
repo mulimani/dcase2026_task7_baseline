@@ -97,7 +97,7 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
         with open(os.path.join(output_path  + 'output_' + timestr + '.txt'), 'a') as f:
             class_label = list(config.dict_class_labels.keys())[list(config.dict_class_labels.values()).index(int(targets.cpu().numpy()))]
-            f.write(audio_file[0] + '\t' + str(class_label) + '\t' + 'D'+str(task_id.cpu().numpy() + 1) + '\t' + str(int(targets.cpu().numpy())) + '\n')
+            f.write(audio_file[0] + '\t' + class_label + '\n')
         # print(total, correct)
     # print(total, correct)
     for key in output_dict.keys():
