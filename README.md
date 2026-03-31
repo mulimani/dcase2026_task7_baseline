@@ -40,7 +40,7 @@ audio/07673.wav	speech	D3	9
 * Labels for corresponding sounds are listed in [config_task7](utils/config_task7.py).
 * We segmented the audios in development train into 4-second signals for training the baseline system in batches using [chunking](utils/chunking.py). The testing samples have variable lengths. During inference, we predict the class label per audio file. 
 * Log mel-band energies are obtained from sounds using [torchlibrosa](https://github.com/qiuqiangkong/torchlibrosa) library.
-* The baseline system writes the output.txt file to the output_folder path specified in [config_task7](utils/config_task7.py)
+* The baseline system writes the output.txt file to the output_folder path specified in [config_task7](utils/config_task7.py).
 
 ## Checkpoints
 The development data of the domain D1 is not available. However, the pre-trained models on D1 (checkpoint_D1.pth), D2 (checkpoint_D2.pth) and D3 (checkpoint_D3.pth) can be downloaded from [here](https://drive.google.com/drive/folders/1C21s1KlN4ZbnboIdtO8H0T-S0_k8yw3o?usp=sharing).  Store all the checkpoints in a folder 'checkpoints/BN/' or updated the 'save_resume_path' in [config_task7](utils/config_task7.py) to check the results of the baseline system on development test set.
