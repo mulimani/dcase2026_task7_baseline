@@ -84,12 +84,7 @@ python baseline/baseline_DIL_task7.py train --augmentation='none' --learning_rat
 
 Results of baseline are calculated using PyTorch in GPU mode . The baseline is trained for 120 epochs and tested on the test split of the development dataset.
 <table class="dataset-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>D2</th>
-      <th>D3</th>
-    </tr>
+  <thead>   
   </thead>
   <tbody>
     <tr>
