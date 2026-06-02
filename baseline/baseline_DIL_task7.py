@@ -100,7 +100,6 @@ def _compute_uncertainity(model, loader, seen_domains, device):
             class_label = list(config.dict_class_labels.keys())[list(config.dict_class_labels.values()).index(int(targets.cpu().numpy()))]
             f.write(audio_file[0] + '\t' + class_label + '\n')
         # print(total, correct)
-    # print(total, correct)
     for key in output_dict.keys():
         output_dict[key] = np.concatenate(output_dict[key], axis=0)
     cm = metrics.confusion_matrix(np.argmax(output_dict['target'], axis=-1), np.argmax(output_dict['clipwise_output'], axis=-1), labels=None)
