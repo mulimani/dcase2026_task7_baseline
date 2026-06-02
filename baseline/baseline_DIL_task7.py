@@ -40,11 +40,11 @@ def _compute_accuracy(model, loader, task, device):
         with torch.no_grad():
             outputs = model(inputs, task)
         outputs = torch.softmax(outputs, dim=1)
-        predicts = torch.max(outputs, dim=1)[1]
+        #predicts = torch.max(outputs, dim=1)[1]
         target_labels = targets
-        targets = torch.argmax(targets, dim=-1)
-        correct += (predicts.cpu() == targets.cpu()).sum()
-        total += len(targets)
+        #targets = torch.argmax(targets, dim=-1)
+        #correct += (predicts.cpu() == targets.cpu()).sum()
+        #total += len(targets)
         append_to_dict(output_dict, 'clipwise_output',
                        outputs.data.cpu().numpy())
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
@@ -53,9 +53,9 @@ def _compute_accuracy(model, loader, task, device):
     for key in output_dict.keys():
         output_dict[key] = np.concatenate(output_dict[key], axis=0)
     cm = metrics.confusion_matrix(np.argmax(output_dict['target'], axis=-1), np.argmax(output_dict['clipwise_output'], axis=-1), labels=None)
-    class_acc = cm.diagonal() / cm.sum(axis=1)
-    #print(class_acc)
-    return np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+    class_acc = np.nan_to_num(cm.diagonal() / cm.sum(axis=1), nan=0.0)
+    macro_acc = np.mean(class_acc)
+    return round(float(macro_acc) * 100, 2) #np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
 
 def _compute_uncertainity(model, loader, seen_domains, device):
@@ -88,11 +88,11 @@ def _compute_uncertainity(model, loader, seen_domains, device):
         with torch.no_grad():
             outputs = model(inputs, task_id)
         outputs = torch.softmax(outputs, dim=1)
-        predicts = torch.max(outputs, dim=1)[1]
+        #predicts = torch.max(outputs, dim=1)[1]
         target_labels = targets
         targets = torch.argmax(targets, dim=-1)
-        correct += (predicts.cpu() == targets.cpu()).sum()
-        total += len(targets)
+        #correct += (predicts.cpu() == targets.cpu()).sum()
+        #total += len(targets)
         append_to_dict(output_dict, 'clipwise_output',
                        outputs.data.cpu().numpy())
         append_to_dict(output_dict, 'target', target_labels.cpu().numpy())
@@ -104,10 +104,13 @@ def _compute_uncertainity(model, loader, seen_domains, device):
     for key in output_dict.keys():
         output_dict[key] = np.concatenate(output_dict[key], axis=0)
     cm = metrics.confusion_matrix(np.argmax(output_dict['target'], axis=-1), np.argmax(output_dict['clipwise_output'], axis=-1), labels=None)
-    class_acc = cm.diagonal() / cm.sum(axis=1)
+    class_acc = np.nan_to_num(cm.diagonal() / cm.sum(axis=1), nan=0.0)
+    macro_acc = np.mean(class_acc)
+
     #print('confusion matrix:', cm)
     #print('class-wise accuracy', class_acc)
-    return np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+    #print('macro', macro_acc)
+    return round(float(macro_acc) * 100, 2) #np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
 
 class Learner():
