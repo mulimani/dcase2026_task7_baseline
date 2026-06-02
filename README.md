@@ -129,8 +129,8 @@ Results of baseline are calculated using PyTorch in GPU mode . The baseline is t
   </tbody>
 </table> -->
 
-The baseline model first learns to classify sounds from domain D2, obtains an accuracy of 54.7% on D2 data. Then, it incrementally learns domain D3 and obtains an accuracy of 35.0% on D3. 
-The average accuracy of the baseline model on D2 and D3 is 44.8%. 
+The baseline model first learns to classify sounds from domain D2, obtains an accuracy of 46.9% on D2 data. Then, it incrementally learns domain D3 and obtains an accuracy of 41.5% on D3. 
+The average accuracy of the baseline model on D2 and D3 is 44.4%. 
 D1 results will be included in the overall average after the challenge deadline. 
 
 
